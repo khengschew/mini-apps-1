@@ -5,10 +5,15 @@
   </head>
   <body>
     <button id="resetButton" style="margin-bottom:10px;">Reset Game</button>
+    <div id="currentDiv" style="padding-left:4px; display:inline;">
+      Current Player: 
+      <span id="current"></span>
+    </div>
+    <div id="winner" style="padding-left:4px; display:none;">
+    </div>
     <div id="gameBoard" style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; width:300px; height:300px;">
       <!-- Generate Game Board -->
     </div>
-    <div id="winner" style=""></div>
     <script src="./app.js">
     </script>
     <script>
