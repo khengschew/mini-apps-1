@@ -127,7 +127,6 @@ var board = {
             data-rowId="${r}"
             data-colId="${c}"
             style="border:solid; border-width:1px; display:flex; align-items:center; justify-content:center;"
-            onClick="board.addPiece(event)"
           >
           </div>
         `;
@@ -138,6 +137,7 @@ var board = {
 
     // Add onClick handlers
     document.getElementById('resetButton').onclick = board.initialize;
+    document.getElementById('gameBoard').onclick = (event) => board.addPiece(event);
 
     console.log('Initialized!');
   },
