@@ -1,8 +1,16 @@
+html, body {
+  height:100%;
+}
+
 body {
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
+}
+
+h3 {
+  text-align: center;
 }
 
 #resetButton {
@@ -50,5 +58,10 @@ body {
 }
 
 th {
-  padding-right:10px;
+  text-align: center;
+  width: 100px;
+}
+
+td {
+  text-align:center;
 }
