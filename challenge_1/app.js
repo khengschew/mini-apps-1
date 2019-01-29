@@ -120,7 +120,7 @@ var board = {
         var currentTurn = board.players[board.turnCount % 2];
 
         // Add symbol to board
-        valueDiv.innerHTML = `<div id="${e.target.dataset.rowid + e.target.dataset.colid + 'Value'}" style="color:${currentTurn.color}; width:80%; height:80%; font-size:80px; display:flex; align-items:center; justify-content:center;">${currentTurn.char}</div>`;
+        valueDiv.innerHTML = `<div id="${e.target.dataset.rowid + e.target.dataset.colid + 'Value'}" class="xo" style="color:${currentTurn.color};">${currentTurn.char}</div>`;
 
         // Check win
         board.checkWin(currentTurn);
@@ -148,7 +148,6 @@ var board = {
             id="${JSON.stringify(r) + JSON.stringify(c)}"
             data-rowId="${r}"
             data-colId="${c}"
-            style="border:solid; border-width:1px; display:flex; align-items:center; justify-content:center;"
           >
           </div>
         `;

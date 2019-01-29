@@ -1,0 +1,54 @@
+body {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+#resetButton {
+  margin-bottom:10px;
+}
+
+#currentDiv {
+  padding-left:4px;
+  display:inline;
+}
+
+#winner {
+  padding-left:4px;
+  display:none;
+}
+
+#gameBoard {
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width:300px;
+  height:300px;
+}
+
+.grid {
+  border:solid;
+  border-width:1px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.xo {
+  width:80%;
+  height:80%;
+  font-size:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#scoreBoardDiv {
+  margin-top:10px;
+  display:none;
+}
+
+th {
+  padding-right:10px;
+}
