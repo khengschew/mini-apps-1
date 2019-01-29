@@ -6,6 +6,12 @@ var board = {
   ],
   winners: {},
 
+  getNames: function() {
+    board.players[0].name = prompt('Player One Name', 'Player One');
+    board.players[1].name = prompt('Player Two Name', 'Player Two');
+    board.setTurnLabel();
+  },
+
   resetData: function() {
     board.turnCount = 0;
     board.winner = [];
@@ -88,7 +94,9 @@ var board = {
   setWinner: function(currentTurn) {
     if (currentTurn !== 'tied') {
       board.winner.push(currentTurn);
-      board.winners[currentTurn.char] = board.winners[currentTurn.char] + 1 || 1;
+      
+      var playerName = currentTurn.name || currentTurn.char;
+      board.winners[playerName] = board.winners[playerName] + 1 || 1;
       console.log(board.winners);
 
       // Swap start order if necessary
@@ -147,7 +155,6 @@ var board = {
       }
     }
     document.getElementById('gameBoard').innerHTML = gameBoard;
-    board.setTurnLabel();
 
     // Add onClick handlers
     document.getElementById('resetButton').onclick = board.initialize;
@@ -159,8 +166,12 @@ var board = {
   setTurnLabel: function() {
     // Set turn label
     var currentLabel = document.getElementById('current');
-    currentLabel.innerHTML = board.players[board.turnCount % 2].char;
-    currentLabel.style.color = board.players[board.turnCount % 2].color;
+    var currentPlayer = board.players[board.turnCount % 2];
+    currentLabel.innerHTML = currentPlayer.char;
+    if (currentPlayer.name) {
+      currentLabel.innerHTML = currentLabel.innerHTML + ` (${currentPlayer.name})`;
+    }
+    currentLabel.style.color = currentPlayer.color;
 
     // Increment turn
     board.turnCount += 1;
@@ -173,7 +184,8 @@ var board = {
       winnerLabel.innerHTML = 'Everybody loses. Ties are for losers.';
       winnerLabel.style.display = 'inline';
     } else {
-      winnerLabel.innerHTML = `Player ${currentTurn.char} Wins!`;
+      var winnerName = currentTurn.name || currentTurn.char;
+      winnerLabel.innerHTML = `${winnerName} Wins!`;
       winnerLabel.style.color = currentTurn.color;
       winnerLabel.style.display = 'inline';
     }
