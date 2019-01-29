@@ -11,6 +11,7 @@
       <span id="current"></span>
     </div>
     <div id="winner">
+      win!
     </div>
     <div id="gameBoard">
       <!-- Generate Game Board -->
@@ -22,13 +23,18 @@
             <th>Player</th>
             <th>Won</th>
         </tr>
+        <tr class="playerScore">
+          <th>Player One</th>
+        </tr>
+        <tr class="playerScore">
+          <th>Player Two</th>
+        </tr>
       </table>
     </div>
     <script src="./app.js">
     </script>
     <script>
         board.initialize();
-        board.getNames();
     </script>
   </body>
 </html>

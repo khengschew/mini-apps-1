@@ -9,12 +9,12 @@ var board = {
   getNames: function() {
     board.players[0].name = prompt('Player One Name', 'Player One');
     board.players[1].name = prompt('Player Two Name', 'Player Two');
-    board.setTurnLabel();
   },
 
   resetData: function() {
     board.turnCount = 0;
     board.winner = [];
+    board.setTurnLabel();
   },
 
   checkWin: function(currentTurn) {
@@ -97,7 +97,6 @@ var board = {
       
       var playerName = currentTurn.name || currentTurn.char;
       board.winners[playerName] = board.winners[playerName] + 1 || 1;
-      console.log(board.winners);
 
       // Swap start order if necessary
       if (board.players[0].char !== currentTurn.char) {
@@ -132,11 +131,22 @@ var board = {
   initialize: function() {
     console.log('Board is initializing...');
 
+    board.getNames();
+    board.reset();
+
+    // Add onClick handlers
+    document.getElementById('resetButton').onclick = board.reset;
+    document.getElementById('gameBoard').onclick = (event) => board.addPiece(event);
+    
+    console.log('Initialized!');
+  },
+  
+  reset: function() {
     // Set up game data
     board.resetData();
 
     // Clear view
-    document.getElementById('winner').style.display = 'none';
+    document.getElementById('winner').style.visibility = 'hidden';
 
     // Set up game board
     var gameBoard = '';
@@ -154,12 +164,6 @@ var board = {
       }
     }
     document.getElementById('gameBoard').innerHTML = gameBoard;
-
-    // Add onClick handlers
-    document.getElementById('resetButton').onclick = board.initialize;
-    document.getElementById('gameBoard').onclick = (event) => board.addPiece(event);
-
-    console.log('Initialized!');
   },
 
   setTurnLabel: function() {
@@ -181,17 +185,17 @@ var board = {
 
     if (currentTurn === 'tied') {
       winnerLabel.innerHTML = 'Everybody loses. Ties are for losers.';
-      winnerLabel.style.display = 'inline';
+      winnerLabel.style.visibility = 'visible';
     } else {
       var winnerName = currentTurn.name || currentTurn.char;
       winnerLabel.innerHTML = `${winnerName} Wins!`;
       winnerLabel.style.color = currentTurn.color;
-      winnerLabel.style.display = 'inline';
+      winnerLabel.style.visibility = 'visible';
     }
   },
 
   setLeaderBoard: function() {
-    document.getElementById('scoreBoardDiv').style.display = 'block';
+    document.getElementById('scoreBoardDiv').style.visibility = 'visible';
 
     for (var player in board.winners) {
       var newRow = `<tr id="player${player}"><td>${player}</td><td>${board.winners[player]}</td></tr>`;
@@ -199,7 +203,8 @@ var board = {
       if (playerScore !== null) {
         document.getElementById('player' + player).outerHTML = newRow;
       } else {
-        document.getElementById('scoreBoard').innerHTML = document.getElementById('scoreBoard').innerHTML + newRow;
+        var blankScore = document.getElementsByClassName('playerScore')[0];
+        blankScore.outerHTML = newRow;
       }
     }
   }
