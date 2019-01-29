@@ -4,6 +4,7 @@ var board = {
     {char: 'X', color: 'red'},
     {char: 'O', color: 'green'}
   ],
+  winners: {},
 
   resetData: function() {
     board.turnCount = 0;
@@ -11,7 +12,7 @@ var board = {
   },
 
   checkWin: function(currentTurn) {
-    var isWinner = false;
+    var isComplete = true;
 
     // Check row
     for (var i = 0; i < 3; i++) {
@@ -20,6 +21,8 @@ var board = {
         var currentVal = document.getElementById(JSON.stringify(i) + JSON.stringify(j) + 'Value');
         if (currentVal !== null) {
           currentVal = currentVal.innerHTML;
+        } else {
+          isComplete = false;
         }
         currentRow += currentVal;
       }
@@ -77,16 +80,25 @@ var board = {
       return;
     }
 
+    if (isComplete) {
+      board.setWinner('tied');
+    }
   },
 
   setWinner: function(currentTurn) {
-    board.winner.push(currentTurn);
-    board.setWinnerLabel(currentTurn);
+    if (currentTurn !== 'tied') {
+      board.winner.push(currentTurn);
+      board.winners[currentTurn.char] = board.winners[currentTurn.char] + 1 || 1;
+      console.log(board.winners);
 
-    // Swap start order if necessary
-    if (board.players[0].char !== currentTurn.char) {
-      board.players.unshift(board.players.pop());
+      // Swap start order if necessary
+      if (board.players[0].char !== currentTurn.char) {
+        board.players.unshift(board.players.pop());
+      }
     }
+
+    board.setWinnerLabel(currentTurn);
+    board.setLeaderBoard();
   },
 
   // CONTROLLER CODE
@@ -156,8 +168,28 @@ var board = {
 
   setWinnerLabel: function(currentTurn) {
     var winnerLabel = document.getElementById('winner');
-    winnerLabel.innerHTML = `Player ${currentTurn.char} Wins!`;
-    winnerLabel.style.color = currentTurn.color;
-    winnerLabel.style.display = 'inline';
+
+    if (currentTurn === 'tied') {
+      winnerLabel.innerHTML = 'Everybody loses. Ties are for losers.';
+      winnerLabel.style.display = 'inline';
+    } else {
+      winnerLabel.innerHTML = `Player ${currentTurn.char} Wins!`;
+      winnerLabel.style.color = currentTurn.color;
+      winnerLabel.style.display = 'inline';
+    }
+  },
+
+  setLeaderBoard: function() {
+    document.getElementById('scoreBoardDiv').style.display = 'block';
+
+    for (var player in board.winners) {
+      var newRow = `<tr id="player${player}"><td>${player}</td><td>${board.winners[player]}</td></tr>`;
+      var playerScore = document.getElementById('player' + player);
+      if (playerScore !== null) {
+        document.getElementById('player' + player).outerHTML = newRow;
+      } else {
+        document.getElementById('scoreBoard').innerHTML = document.getElementById('scoreBoard').innerHTML + newRow;
+      }
+    }
   }
 }
