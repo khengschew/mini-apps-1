@@ -81,10 +81,12 @@ var board = {
 
   setWinner: function(currentTurn) {
     board.winner.push(currentTurn);
-    var winnerLabel = document.getElementById('winner');
-    winnerLabel.innerHTML = `Player ${currentTurn.char} Wins!`;
-    winnerLabel.style.color = currentTurn.color;
-    winnerLabel.style.display = 'inline';
+    board.setWinnerLabel(currentTurn);
+
+    // Swap start order if necessary
+    if (board.players[0].char !== currentTurn.char) {
+      board.players.unshift(board.players.pop());
+    }
   },
 
   // CONTROLLER CODE
@@ -150,5 +152,12 @@ var board = {
 
     // Increment turn
     board.turnCount += 1;
+  },
+
+  setWinnerLabel: function(currentTurn) {
+    var winnerLabel = document.getElementById('winner');
+    winnerLabel.innerHTML = `Player ${currentTurn.char} Wins!`;
+    winnerLabel.style.color = currentTurn.color;
+    winnerLabel.style.display = 'inline';
   }
 }
