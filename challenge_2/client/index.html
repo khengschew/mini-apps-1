@@ -1,2 +1,22 @@
-
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JSON To CSV</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <form action="*" id="JSONSubmit">
+      <label for="JSONData">Insert JSON Here</label>
+      <br>
+      <textarea id="JSONData" rows="20" cols="100"></textarea>
+      <br>
+      <input type="submit" id="submitForm" value="Submit JSON"/>
+    </form>
+    <div id="result"></div>
+    <script src="app.js"></script>
+    <script>
+      app.initialize();
+    </script>
+  </body>
+</html>
 

@@ -1,0 +1,15 @@
+{
+  "name": "challenge_2",
+  "version": "1.0.0",
+  "description": "JSON to CSV converter",
+  "main": "server.js",
+  "scripts": {
+    "test": "",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
