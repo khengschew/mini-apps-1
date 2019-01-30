@@ -15,7 +15,7 @@ app.use(morgan('default'));
 // app.use(express.urlencoded({ extended: true }));
 
 // For Ajax textarea submit
-app.use(express.json());
+// app.use(express.json());
 
 app.use(express.static(__dirname + '/client'));
 app.listen(process.env.PORT || app.get('port'));
@@ -25,7 +25,12 @@ app.post('/', upload.single('document'), function(req, res) {
   // res.setHeader('Content-Type','text/plain');
   fs.readFile(req.file.path, (err, data) => {
     if (err) throw err;
-    res.send(jsonToCSV.parse(data.toString()));
+
+    var csv = jsonToCSV.parse(data.toString());
+    res.setHeader('Content-Disposition', 'attachment;filename=result.csv');
+    // res.set('Content-Type', 'text/csv');
+    res.type('csv');
+    res.send(csv);
   });
   // For form textarea submit
   // res.send(jsonToCSV.parse(req.body));
@@ -49,7 +54,6 @@ jsonToCSV = {
     
     // For file
     var jsonData = JSON.parse(body);
-    console.log(jsonData);
     
     // Loop through all keys:
     // Get value for keys, insert into csvRow
