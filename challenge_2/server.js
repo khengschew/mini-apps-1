@@ -1,9 +1,13 @@
 // Express setup
 var express = require('express');
+var multer = require('multer');
 var app = express();
 app.set('port', 3000);
 
+// For form submit
 app.use(express.urlencoded({ extended: true }));
+
+// For Ajax
 app.use(express.json());
 
 app.use(express.static(__dirname + '/client'));
@@ -19,7 +23,11 @@ jsonToCSV = {
     var headers = [];
     var csvObjs = [];
     var csvRows = [];
+    // For form submit
     var jsonData = JSON.parse(body.JSONData);
+
+    // For Ajax
+    // var jsonData = body;
 
     // Loop through all keys:
     // Get value for keys, insert into csvRow
@@ -63,6 +71,5 @@ jsonToCSV = {
     csvRows.unshift(headers);
 
     return csvRows.join('\n');
-    // return csvRows;
   }
 }

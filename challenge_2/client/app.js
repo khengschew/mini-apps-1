@@ -8,8 +8,9 @@ var app = {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        document.getElementById('JSONData').value = '';
+        // document.getElementById('JSONData').value = xhr.responseText;
         document.getElementById('result').innerHTML = xhr.responseText;
+        document.getElementById('JSONData').value = '';
       }
     };
     xhr.send(formData);

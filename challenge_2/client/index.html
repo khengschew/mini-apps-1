@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <form action="/" id="JSONSubmit" method="post">
+    <form action="/" id="JSONSubmit" method="post" target="result"> 
       <label for="JSONData">Insert JSON Here</label>
       <br>
       <textarea id="JSONData" name="JSONData" rows="20" cols="100"></textarea>
@@ -14,7 +14,7 @@
       <br>
       <input type="submit" id="submitForm" value="Submit JSON"/>
     </form>
-    <div id="result">CSV will appear here!</div>
+    <iframe id="result" name="result" width="700" height="600">CSV will appear here!</iframe>
     <script src="app.js"></script>
     <script>
       app.initialize();
