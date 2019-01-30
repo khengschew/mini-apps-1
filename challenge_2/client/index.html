@@ -5,11 +5,11 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <form action="/" id="JSONSubmit" method="post" target="result"> 
+    <form action="/" id="JSONSubmit" enctype="multipart/form-data" method="post" target="result"> 
       <label for="JSONData">Insert JSON Here</label>
       <br>
-      <textarea id="JSONData" name="JSONData" rows="20" cols="100"></textarea>
-      <br>
+      <!-- <textarea id="JSONData" name="JSONData" rows="20" cols="100"></textarea> -->
+      <!-- <br> -->
       <input type="file" id="document" name="document" />
       <br>
       <input type="submit" id="submitForm" value="Submit JSON"/>

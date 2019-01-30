@@ -1,21 +1,31 @@
 // Express setup
 var express = require('express');
-var multer = require('multer');
+var fs = require('fs');
 var app = express();
 app.set('port', 3000);
 
-// For form submit
+var multer = require('multer');
+var upload = multer({
+  dest: 'uploads/'
+});
+
+// For form textarea submit
 app.use(express.urlencoded({ extended: true }));
 
-// For Ajax
-app.use(express.json());
+// For Ajax textarea submit
+// app.use(express.json());
 
 app.use(express.static(__dirname + '/client'));
 app.listen(process.env.PORT || app.get('port'));
 
-app.post('/', function(req, res) {
+app.post('/', upload.single('document'), function(req, res) {
   res.setHeader('Content-Type','text/plain');
-  res.send(jsonToCSV.parse(req.body));
+  fs.readFile(req.file.path, (err, data) => {
+    if (err) throw err;
+    res.send(jsonToCSV.parse(data.toString()));
+  });
+  // For form textarea submit
+  // res.send(jsonToCSV.parse(req.body));
 });
 
 jsonToCSV = {
@@ -23,12 +33,21 @@ jsonToCSV = {
     var headers = [];
     var csvObjs = [];
     var csvRows = [];
-    // For form submit
-    var jsonData = JSON.parse(body.JSONData);
 
-    // For Ajax
+    if (body[body.length - 1] === ';') {
+      body = body.slice(0, body.length - 1);
+    }
+
+    
+    // For form textarea submit
+    // var jsonData = JSON.parse(body.JSONData);
+    
+    // For Ajax textare submit
     // var jsonData = body;
-
+    
+    // For file
+    var jsonData = JSON.parse(body);
+    
     // Loop through all keys:
     // Get value for keys, insert into csvRow
     // If children, then recursively call parse on children, append to results
