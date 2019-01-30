@@ -1,6 +1,7 @@
 // Express setup
 var express = require('express');
 var fs = require('fs');
+var morgan = require('morgan');
 var app = express();
 app.set('port', 3000);
 
@@ -8,18 +9,20 @@ var multer = require('multer');
 var upload = multer({
   dest: 'uploads/'
 });
+app.use(morgan('default'));
 
 // For form textarea submit
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 // For Ajax textarea submit
-// app.use(express.json());
+app.use(express.json());
 
 app.use(express.static(__dirname + '/client'));
 app.listen(process.env.PORT || app.get('port'));
 
 app.post('/', upload.single('document'), function(req, res) {
-  res.setHeader('Content-Type','text/plain');
+// app.post('/', function(req, res) {
+  // res.setHeader('Content-Type','text/plain');
   fs.readFile(req.file.path, (err, data) => {
     if (err) throw err;
     res.send(jsonToCSV.parse(data.toString()));
@@ -37,7 +40,6 @@ jsonToCSV = {
     if (body[body.length - 1] === ';') {
       body = body.slice(0, body.length - 1);
     }
-
     
     // For form textarea submit
     // var jsonData = JSON.parse(body.JSONData);
@@ -47,6 +49,7 @@ jsonToCSV = {
     
     // For file
     var jsonData = JSON.parse(body);
+    console.log(jsonData);
     
     // Loop through all keys:
     // Get value for keys, insert into csvRow
