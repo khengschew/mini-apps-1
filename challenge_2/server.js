@@ -21,11 +21,6 @@ jsonToCSV = {
     var csvRows = [];
     var jsonData = JSON.parse(body.JSONData);
 
-    // console.log(jsonData);
-
-    // Get object headers
-    // var headers = Object.keys(json);
-
     // Loop through all keys:
     // Get value for keys, insert into csvRow
     // If children, then recursively call parse on children, append to results
@@ -49,7 +44,6 @@ jsonToCSV = {
     };
 
     rParse(jsonData);
-    console.log(csvObjs);
     
     // Loop through csvObjs:
       // Loop through headers:
