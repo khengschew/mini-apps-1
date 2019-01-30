@@ -1,7 +1,8 @@
 form label {
   font-weight:600;
-},
+}
 
 iframe {
-  width: 1000px;
+  width: 700px;
+  height: 600px;
 }
