@@ -1,4 +1,5 @@
 import React from 'react';
+import Board from './board.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        Hello World!
+        <Board rows={6} cols={7} />
       </div>
     );
   }
