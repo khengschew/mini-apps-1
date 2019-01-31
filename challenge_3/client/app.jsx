@@ -17,18 +17,39 @@ class App extends React.Component {
       'cc': '',
       'expiryDate': '',
       'cvv': '',
-      'billingZip': '',
-      'fields': [
-        [],
-        ['name', 'email', 'password'],
-        ['address1', 'address2', 'city', 'state', 'zipCode', 'phoneNumber'],
-        ['cc', 'expiryDate', 'cvv', 'billingZip'],
-        []
-      ]
+      'billingZip': ''
     }
+
+    this.fields = [
+      [],
+      ['name', 'email', 'password'],
+      ['address1', 'address2', 'city', 'state', 'zipCode', 'phoneNumber'],
+      ['cc', 'expiryDate', 'cvv', 'billingZip'],
+      []
+    ];
 
     this.toggleForm = this.toggleForm.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
+  }
+
+  resetDataAndIncrementCurrent() {
+    this.setState({
+      'checkoutId': '',
+      'current': 0,
+      'name': '',
+      'email': '',
+      'password': '',
+      'address1': '',
+      'address2': '',
+      'city': '',
+      'state': '',
+      'zipCode': '',
+      'phoneNumber': '',
+      'cc': '',
+      'expiryDate': '',
+      'cvv': '',
+      'billingZip': ''
+    });
   }
 
   toggleForm(e) {
@@ -40,31 +61,42 @@ class App extends React.Component {
     // 4 = confirmation
     e.preventDefault();
 
-    // Handle ajax to database
-    var bodyVals = {};
-
-    var currFields = this.state.fields[this.state.current];
-
-    for (var i = 0; i < currFields.length; i++) {
-      bodyVals[currFields[i]] = this.state[currFields[i]];
-    }
-
-    fetch('http://localhost:3000/', {
-      method: 'post',
-      body: JSON.stringify(bodyVals),
-      headers: {
-        'Content-Type': 'application/json'
+    if (this.state.current === this.fields.length - 1) {
+      // Clear data, don't send Ajax
+      this.resetDataAndIncrementCurrent();
+    } else {
+      // Handle ajax to database
+      var bodyVals = {};
+      if (this.state.checkoutId !== '') {
+        bodyVals = {'checkoutId': this.state.checkoutId};
       }
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // If data has checkoutId, set checkoutId
-        
-        this.setState({
-          // To do: figure out how to move renders array so we can use length as denominator
-          'current': (this.state.current + 1) % this.state.fields.length
-        });
+
+      var currFields = this.fields[this.state.current];
+
+      for (var i = 0; i < currFields.length; i++) {
+        if (this.state[currFields[i]]) {
+          bodyVals[currFields[i]] = this.state[currFields[i]];
+        }
+      }
+
+
+      fetch('http://localhost:3000/', {
+        method: 'post',
+        body: JSON.stringify(bodyVals),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          // If data has checkoutId, set checkoutId
+          // To do: figure out how to move renders array so we can use length as denominator
+          data['current'] = (this.state.current + 1) % this.fields.length;
+          this.setState(data);
+        });
+    }
   }
 
   onChangeHandler(e) {

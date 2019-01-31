@@ -4,7 +4,7 @@ CREATE DATABASE checkout;
 
 USE checkout;
 
-CREATE TABLE checkout (
+CREATE TABLE checkouts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100),
   email VARCHAR(100),
