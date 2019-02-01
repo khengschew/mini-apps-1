@@ -15,6 +15,7 @@ class App extends React.Component {
 
     this.state.board = this.generateBoard();
 
+    this.resetBoard = this.resetBoard.bind(this);
     this.setPiece = this.setPiece.bind(this);
   }
 
@@ -27,7 +28,7 @@ class App extends React.Component {
   }
 
   resetBoard() {
-    var newBoard = generateBoard();
+    var newBoard = this.generateBoard();
 
     this.setState({
       board: newBoard
@@ -51,10 +52,14 @@ class App extends React.Component {
     });
   }
 
+  checkWin() {
+    
+  }
+
   render() {
     return (
       <div>
-        <h1>Connect Four</h1>
+        <h1>Connect Four <button onClick={this.resetBoard}>New Game</button></h1>
         <Board rows={6} cols={7} board={this.state.board} setPiece={this.setPiece}/>
       </div>
     );
