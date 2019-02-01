@@ -7,7 +7,7 @@ var Board = (props) => (
     {
       _.range(props.cols).map(
         (colNum) => (
-          <Column rows={props.rows} y={colNum} />
+          <Column rows={props.rows} y={colNum} board={props.board} setPiece={props.setPiece}/>
         )
       )
     }
