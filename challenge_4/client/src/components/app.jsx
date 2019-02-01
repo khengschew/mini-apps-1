@@ -35,11 +35,16 @@ class App extends React.Component {
   }
 
   setPiece(e) {
-    var row = e.target.dataset.x;
     var col = e.target.dataset.y;
-    console.log(e.target.dataset, ' row ' + row, ' col ' + col);
+
     var updateBoard = this.state.board;
-    updateBoard[row][col] = this.state.currPlayer;
+    for (var i = 0; i < this.state.rows; i++) {
+      if (updateBoard[i][col] === 0) {
+        updateBoard[i][col] = this.state.currPlayer;
+        break;
+      }
+    }
+
     this.setState({
       board: updateBoard,
       currPlayer: this.state.currPlayer === 1 ? 2 : 1
